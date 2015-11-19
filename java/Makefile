@@ -1,6 +1,6 @@
 prefix = /usr/local/rrdtool-1.0.33
 
-JAVA_BIN = /usr/bin
+JAR=jar
 
 ALL: subdirs jar docs
 
@@ -17,7 +17,7 @@ jni:
 	$(MAKE) -C gnu jni
 
 jar:
-	$(JAVA_BIN)/jar cf rrdjni.jar gnu/rrd/*.class
+	$(JAR) cf rrdjni.jar gnu/rrd/*.class
 
 docs:
 	test -d ../doc/java || mkdir ../doc/java;

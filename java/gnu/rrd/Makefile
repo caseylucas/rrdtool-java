@@ -4,11 +4,11 @@ java_dir = ../..
 
 RRD_SRC_DIR   = $(top_dir)/src
 GD_LIB_DIR    = $(top_dir)/gd1.3
-JAVA_HOME     = /usr/java
+#JAVA_HOME     = /usr/java
 RRD_LIBS      = -L$(top_dir)/src/.libs -lrrd
 JAVA_INCLUDE  = $(JAVA_HOME)/include
-JAVA_PLATFORM = solaris
-JAVA_BIN      = /usr/bin
+#JAVA_PLATFORM = solaris
+JAVA_BIN      = $(JAVA_HOME)/bin
 
 classes=RRDRec.class \
 	RRDGraph.class \
@@ -32,7 +32,7 @@ install:
 	cp librrdjni.so $(prefix)/lib
 
 librrdjni.so: RRDJNI.c RRDJNI.h
-	$(CC) -G -I$(RRD_SRC_DIR) -I$(GD_LIB_DIR) -I$(JAVA_INCLUDE) -I$(JAVA_INCLUDE)/solaris RRDJNI.c -o $@ $(RRD_LIBS) 
+	$(CC) -fpic -shared -I$(RRD_SRC_DIR) -I$(GD_LIB_DIR) -I$(JAVA_INCLUDE) -I$(JAVA_INCLUDE)/linux RRDJNI.c -o $@ $(RRD_LIBS) 
 
 ../%.class:
 	$(MAKE) -C $(@D) $(@F)
