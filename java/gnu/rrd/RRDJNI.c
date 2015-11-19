@@ -7,8 +7,8 @@
 
 #include "RRDJNI.h"
 #include <time.h>
-#include <rrd_tool.h>
-#include <rrd_format.h>
+#include <rrd.h>
+#include <stdlib.h>
 
 static char ** initArgs(JNIEnv *env, jobjectArray argv, char *cmd);
 static void freeArgs(JNIEnv *env, jobjectArray argv, char *argv2[]);
@@ -44,6 +44,7 @@ JNIEXPORT jobject JNICALL Java_gnu_rrd_RRDJNI_graph
   const char* fn;
   int         asize = 0;
   int         i, j, xsize,  ysize;
+  double      ymin, ymax;
   jcharArray  graph;
   jclass      RRDGraphClass;
   jmethodID   RRDGraphMethodInit;
@@ -60,12 +61,11 @@ JNIEXPORT jobject JNICALL Java_gnu_rrd_RRDJNI_graph
   
   RRDGraphClass      = (*env)->FindClass(env, "gnu/rrd/RRDGraph");
   RRDGraphMethodInit = (*env)->GetMethodID(env, RRDGraphClass, "<init>",
-					   "(Ljava/lang/String;Ljava/lang/String;II)V");
+					   "(Ljava/lang/String;Ljava/lang/String;IIDD)V");
     
   calcpr = NULL;
   argv2  = initArgs(env, argv, "graph");
-  
-  if (rrd_graph((*env)->GetArrayLength(env, argv)+1, argv2, &calcpr, &xsize, &ysize) != -1 ) {
+  if (rrd_graph((*env)->GetArrayLength(env, argv)+1, argv2, &calcpr, &xsize, &ysize, NULL, &ymin, &ymax) != -1 ) {
     
     if (calcpr) {
       for(i = 0; calcpr[i]; i++) asize = asize + strlen(calcpr[i]) + 1;
@@ -86,7 +86,7 @@ JNIEXPORT jobject JNICALL Java_gnu_rrd_RRDJNI_graph
     graphObj = (*env)->NewObject(env, RRDGraphClass, RRDGraphMethodInit,
 				 (jstring)(*env)->GetObjectArrayElement(env, argv, 0),
 				 (jstring)(*env)->NewStringUTF(env, info),
-				 (jint)xsize, (jint)ysize);
+				 (jint)xsize, (jint)ysize, (jdouble)ymin, (jdouble)ymax);
   }
   freeArgs(env, argv, argv2);
   if (rrd_test_error())
@@ -145,7 +145,7 @@ JNIEXPORT jobject JNICALL Java_gnu_rrd_RRDJNI_last
 JNIEXPORT jobject JNICALL Java_gnu_rrd_RRDJNI_info
 (JNIEnv *env, jclass cl, jobjectArray argv) {
   char      **argv2;
-  info_t    *info, *save;
+  rrd_info_t    *info, *save;
 
   jclass        HashtableClass;
   jmethodID     HashtableMethodInit;

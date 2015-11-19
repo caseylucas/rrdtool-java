@@ -106,9 +106,9 @@ public class RRDTool {
         System.out.println("");
         System.out.println("Entire Hashtable");
         System.out.println("----------------");
-        Enumeration enum = h.keys();
-        while (enum.hasMoreElements()) {
-          String  key  = (String)enum.nextElement();
+        Enumeration enumeration = h.keys();
+        while (enumeration.hasMoreElements()) {
+          String  key  = (String)enumeration.nextElement();
           RRDInfo info = (RRDInfo)h.get(key);
           switch (info.getType()) {
             case RRDInfo.DOUBLE_VALUE:
@@ -127,9 +127,9 @@ public class RRDTool {
         }
       } else if (command.equalsIgnoreCase("fetch"))   { 
 	Vector v = RRDJNI.fetch(opt);
-	Enumeration enum = v.elements();
-	while (enum.hasMoreElements()) {
-	  RRDRec rec  = (RRDRec)enum.nextElement();
+	Enumeration enumeration = v.elements();
+	while (enumeration.hasMoreElements()) {
+	  RRDRec rec  = (RRDRec)enumeration.nextElement();
 	  String out  = rec.getDate() + ": ";
 	  Vector data = rec.getData();
 	  Enumeration edata = data.elements();
