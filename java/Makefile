@@ -2,7 +2,7 @@ prefix = /usr/local/rrdtool-1.0.33
 
 JAVA_BIN=$(JAVA_HOME)/bin
 
-ALL: subdirs jar docs
+ALL: subdirs jar
 
 subdirs: 
 	$(MAKE) -C gnu ALL
