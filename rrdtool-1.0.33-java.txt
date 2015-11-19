@@ -1,0 +1,17 @@
+From: David A. Neitz <David.A.Neitz@mail.sprint.com>
+To: oetiker@ee.ethz.ch
+Date: Mon, 18 Feb 2002 10:39:33 -0500
+Subject: RRD Java Interface
+
+
+I spent some time last week searching for an adequate interface for RRD
+to Java.  Much to my surprise, I was unable to locate such interface.
+Therefore, I took a day and built a low-level interface for Java to
+RRD.  I have tested the APIs and everything seems to be in working
+order.  I have attached the code and hope that you would include it in
+future builds of RRD.  The makefiles are currently built to support
+Solaris.  I didn't want to mess with your automake code.
+
+Regards,
+
+Dave
