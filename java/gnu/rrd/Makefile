@@ -1,4 +1,4 @@
-prefix   = /usr/local/rrdtool-1.0.33
+prefix   ?= /usr/local/rrdtool-1.0.33
 top_dir  = ../../..
 java_dir = ../..
 
