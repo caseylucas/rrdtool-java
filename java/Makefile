@@ -1,4 +1,4 @@
-prefix = /usr/local/rrdtool-1.0.33
+prefix ?= /usr/local/rrdtool-1.0.33
 
 JAVA_BIN=$(JAVA_HOME)/bin
 
